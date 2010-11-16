@@ -20,9 +20,9 @@ def weatherOf( loc ):
   apiCall = "http://www.google.com/ig/api?weather=" + loc
   apiResponse = urllib.urlopen(apiCall)
   weatherDom = minidom.parse(apiResponse)
-  currentCondition = weatherDom.getElementsByTagName('condition')
-  weather = currentCondition.firstChild.data
-  return weather
+  weatherDomTags = weatherDom.getElementsByTagName('condition')
+  for tag in weatherDomTags:
+    print tag.attributes   
 
 ip = "8.8.8.8"
 loc = locOf( ip )
