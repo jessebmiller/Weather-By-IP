@@ -20,24 +20,13 @@ def weatherOf( loc ):
   apiCall = "http://www.google.com/ig/api?weather=" + loc
   apiResponse = urllib.urlopen(apiCall)
   weatherDom = minidom.parse(apiResponse)
-  weatherDomTags = weatherDom.getElementsByTagName('condition')
-  for tag in weatherDomTags:
-    print tag.attributes   
+  currentConditions = weatherDom.getElementsByTagName('current_conditions')
+  return currentConditions[0].firstChild.attributes['data'].value
 
-ip = "8.8.8.8"
+ip = "2.2.2.2"
 loc = locOf( ip )
 weather = weatherOf( loc )
 
-print "\n\n" + loc, weather
+print "\n\n", loc, "is", weather, "\n\n"
 
-#tests
-print "\n\nTests:"
 
-#should return Mounain View, CA
-if locOf("8.8.8.8") == "Mountain View, CA":
-  print "locOf( ip ) PASS"
-else:
-  print "locOf( ip ) FAIL"
-
-#add white space to give results some room
-print "\n\n"
