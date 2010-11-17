@@ -2,6 +2,7 @@
 
 #Weather by IP address must recieve an IP address as an arguement, gather the zip code for that IP, then gather and display the weather for that zip code.
 
+import sys
 import urllib
 from xml.dom import minidom
 
@@ -23,10 +24,15 @@ def weatherOf( loc ):
   currentConditions = weatherDom.getElementsByTagName('current_conditions')
   return currentConditions[0].firstChild.attributes['data'].value
 
-ip = "2.2.2.2"
-loc = locOf( ip )
-weather = weatherOf( loc )
+def main():
+  if len(sys.argv) != 2:
+    print 'usage: python wbip.py ip-to-check'
+    sys.exit(1)
 
-print "\n\n", loc, "is", weather, "\n\n"
+  ip = sys.argv[1]
+  print "the current weather conditions at IP:", ip, "are", weatherOf( locOf(ip) )+'.'
 
+  
+if __name__ == '__main__':
+  main()
 
